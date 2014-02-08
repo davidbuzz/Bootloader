@@ -129,6 +129,29 @@ static struct {
 #endif
 
 
+#ifdef BOARD_QUANTON
+# define BOARD_TYPE			20        // 20 or 0x14 , same, same. , leaves room for more px4 or 3dr boards.
+# define BOARD_FLASH_SECTORS		11
+# define BOARD_FLASH_SIZE		(1024 * 1024)
+
+# define OSC_FREQ			16 // not 24 like the PX4's
+
+# define BOARD_PIN_LED_ACTIVITY		GPIO14		// no activity LED = 0
+# define BOARD_PIN_LED_BOOTLOADER	GPIO13
+# define BOARD_PORT_LEDS		GPIOC // BUZZ: LEDS are on PC13 and PC14(blue)
+# define BOARD_CLOCK_LEDS		RCC_AHB1ENR_IOPEEN
+# define BOARD_LED_ON			gpio_clear
+# define BOARD_LED_OFF			gpio_set
+
+//# define BOARD_FORCE_BL_PIN		GPIO11
+# define BOARD_FORCE_BL_PORT		GPIOA
+# define BOARD_FORCE_BL_CLOCK_REGISTER	RCC_AHB1ENR
+# define BOARD_FORCE_BL_CLOCK_BIT	RCC_AHB1ENR_IOPAEN
+# define BOARD_FORCE_BL_PULL		GPIO_PUPD_PULLUP
+# define BOARD_FORCE_BL_STATE		0
+#endif
+
+
 #define APP_SIZE_MAX			(BOARD_FLASH_SIZE - BOOTLOADER_RESERVATION_SIZE)
 
 /* context passed to cinit */
@@ -259,7 +282,7 @@ board_init(void)
 #ifdef INTERFACE_USB
 	/* enable GPIO9 with a pulldown to sniff VBUS */
 	rcc_peripheral_enable_clock(&RCC_AHB1ENR, RCC_AHB1ENR_IOPAEN);
-	gpio_mode_setup(GPIOA, GPIO_MODE_INPUT, GPIO_PUPD_PULLDOWN, GPIO9);
+	gpio_mode_setup(GPIOA, GPIO_MODE_INPUT, GPIO_PUPD_PULLDOWN, GPIO9); 
 #endif
 
 	/* initialise LEDs */

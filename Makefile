@@ -35,7 +35,7 @@ export COMMON_SRCS	 = bl.c
 #
 # Bootloaders to build
 #
-TARGETS			 = px4fmu_bl px4fmuv2_bl px4flow_bl stm32f4discovery_bl px4io_bl
+TARGETS			 = quanton_bl px4fmu_bl px4fmuv2_bl px4flow_bl stm32f4discovery_bl px4io_bl
 
 # px4io_bl px4flow_bl
 
@@ -53,10 +53,13 @@ clean:
 #
 
 px4fmu_bl: $(MAKEFILE_LIST)
-	make -f Makefile.f4 TARGET=fmu INTERFACE=USB BOARD=FMU USBDEVICESTRING="\\\"PX4 BL FMU v1.x\\\"" USBPRODUCTID="0x0010"
+	make -f Makefile.f4 TARGET=px4fmu INTERFACE=USB BOARD=FMU USBDEVICESTRING="\\\"PX4 BL FMU v1.x\\\"" USBPRODUCTID="0x0010"
 
 px4fmuv2_bl: $(MAKEFILE_LIST)
-	make -f Makefile.f4 TARGET=fmuv2 INTERFACE=USB BOARD=FMUV2 USBDEVICESTRING="\\\"PX4 BL FMU v2.x\\\"" USBPRODUCTID="0x0011"
+	make -f Makefile.f4 TARGET=px4fmuv2 INTERFACE=USB BOARD=FMUV2 USBDEVICESTRING="\\\"PX4 BL FMU v2.x\\\"" USBPRODUCTID="0x0011"
+
+quanton_bl: $(MAKEFILE_LIST)
+	make -f Makefile.f4 TARGET=quanton INTERFACE=USB BOARD=QUANTON USBDEVICESTRING="\\\"QUA BL FMU v1.x\\\"" USBPRODUCTID="0x0012"
 
 stm32f4discovery_bl: $(MAKEFILE_LIST)
 	make -f Makefile.f4 TARGET=discovery INTERFACE=USB BOARD=DISCOVERY USBDEVICESTRING="\\\"PX4 BL DISCOVERY\\\"" USBPRODUCTID="0x0001"
