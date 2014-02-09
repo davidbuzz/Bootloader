@@ -139,9 +139,9 @@ static struct {
 # define BOARD_PIN_LED_ACTIVITY		GPIO14		// no activity LED = 0
 # define BOARD_PIN_LED_BOOTLOADER	GPIO13
 # define BOARD_PORT_LEDS		GPIOC // BUZZ: LEDS are on PC13 and PC14(blue)
-# define BOARD_CLOCK_LEDS		RCC_AHB1ENR_IOPEEN
-# define BOARD_LED_ON			gpio_clear
-# define BOARD_LED_OFF			gpio_set
+# define BOARD_CLOCK_LEDS		RCC_AHB1ENR_IOPCEN // 'CEN' means PORT 'C' 'EN' able
+# define BOARD_LED_OFF			gpio_clear
+# define BOARD_LED_ON			gpio_set
 
 //# define BOARD_FORCE_BL_PIN		GPIO11
 # define BOARD_FORCE_BL_PORT		GPIOA
