@@ -52,18 +52,25 @@ clean:
 # Specify the board type.
 #
 
+px4:		px4fmu_bl px4fmuv2_bl px4io_bl px4flow_bl
+
+px4fmu:		px4fmu_bl
 px4fmu_bl: $(MAKEFILE_LIST)
 	make -f Makefile.f4 TARGET=px4fmu INTERFACE=USB BOARD=FMU USBDEVICESTRING="\\\"PX4 BL FMU v1.x\\\"" USBPRODUCTID="0x0010"
 
+px4fm4v2:	px4fmuv2_bl
 px4fmuv2_bl: $(MAKEFILE_LIST)
 	make -f Makefile.f4 TARGET=px4fmuv2 INTERFACE=USB BOARD=FMUV2 USBDEVICESTRING="\\\"PX4 BL FMU v2.x\\\"" USBPRODUCTID="0x0011"
 
+quanton:	quanton_bl
 quanton_bl: $(MAKEFILE_LIST)
 	make -f Makefile.f4 TARGET=quanton INTERFACE=USB BOARD=QUANTON USBDEVICESTRING="\\\"QUA BL FMU v1.x\\\"" USBPRODUCTID="0x0012"
 
+stm32f4discovery: 	stm32f4discovery_bl
 stm32f4discovery_bl: $(MAKEFILE_LIST)
 	make -f Makefile.f4 TARGET=discovery INTERFACE=USB BOARD=DISCOVERY USBDEVICESTRING="\\\"PX4 BL DISCOVERY\\\"" USBPRODUCTID="0x0001"
 
+px4flow:	px4flow_bl
 px4flow_bl: $(MAKEFILE_LIST)
 	make -f Makefile.f4 TARGET=flow INTERFACE=USB BOARD=FLOW USBDEVICESTRING="\\\"PX4 FLOW v1.3\\\"" USBPRODUCTID="0x0015"
 
@@ -71,5 +78,6 @@ px4flow_bl: $(MAKEFILE_LIST)
 # the board for recovery but not so long as to make restarting after a 
 # brownout problematic.
 #
+px4io: 		px4io_bl
 px4io_bl: $(MAKEFILE_LIST)
 	make -f Makefile.f1 TARGET=io INTERFACE=USART BOARD=IO PX4_BOOTLOADER_DELAY=200
