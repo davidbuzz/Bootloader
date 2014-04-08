@@ -1,0 +1,43 @@
+arm-none-eabi-gdb px4fmuv2_bl.elf
+(gdb) load
+Loading section .text, size 0x1e70 lma 0x8000000
+Loading section .data, size 0x28 lma 0x8001e70
+Start address 0x8000000, load size 7832
+Transfer rate: 15 KB/sec, 870 bytes/write.
+(gdb) run
+The program being debugged has been started already.
+Start it from the beginning? (y or n) y
+Starting program: /Users/buzz/UAV/Bootloader/px4fmuv2_bl.elf 
+(gdb) c
+Continuing.
+Can't send signals to this remote system.  SIGSEGV not sent.
+
+cd /Users/buzz/UAV/Bootloader
+make quanton_bl
+arm-none-eabi-gdb quanton_bl.elf 
+
+/usr/local/bin/openocd -f interface/stlink-v2.cfg -f target/stm32f4x_stlink.cfg 
+gdb> load
+gdb> b main
+gdb> c
+[press reset]
+gdb> n or s
+
+cd /Users/buzz/UAV/ardupilot/ArduCopter
+make quanton
+
+ls /Users/buzz/UAV/PX4Firmware/Build/quanton_APM.build/firmware.*
+
+python /Users/buzz/UAV/Bootloader/px_uploader.py --port /dev/cu.usbmodem1 /Users/buzz/UAV/PX4Firmware/Images/quanton_APM.px4
+
+arm-none-eabi-gdb /Users/buzz/UAV/PX4Firmware/Build/quanton_APM.build/firmware.elf
+gdb> load
+gdb> b nsh_main
+gdb> b nsh_initialize
+gdb> b ArduPilot_main
+gdb> b __start
+gdb> c
+gdb>
+( ctrl-c ) 
+gdb> st
+
