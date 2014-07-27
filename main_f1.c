@@ -48,7 +48,43 @@
 
 # define BOARD_FLASH_SECTORS		60
 # define FLASH_SECTOR_SIZE		0x400
-#else
+
+#endif
+#if defined(BOARD_MAVSTATION)
+# define OSC_FREQ			24
+
+/* need to fix these mappings */ 
+# define BOARD_PIN_LED_ACTIVITY		GPIO14 // this looks OK, for teh GREEN LED. 
+# define BOARD_PIN_LED_BOOTLOADER	GPIO15  // this looks OK, for teh BLUE LED ( I think) . 
+# define BOARD_PORT_LEDS		GPIOB
+# define BOARD_CLOCK_LEDS_REGISTER	RCC_APB2ENR
+# define BOARD_CLOCK_LEDS		RCC_APB2ENR_IOPBEN
+# define BOARD_LED_ON			gpio_clear
+# define BOARD_LED_OFF			gpio_set
+
+# define BOARD_USART			USART2
+# define BOARD_USART_CLOCK_REGISTER	RCC_APB1ENR
+# define BOARD_USART_CLOCK_BIT		RCC_APB1ENR_USART2EN
+
+# define BOARD_PORT_USART		GPIOA
+# define BOARD_PIN_TX			GPIO_USART2_TX
+# define BOARD_PIN_RX			GPIO_USART2_RX
+# define BOARD_USART_PIN_CLOCK_REGISTER	RCC_APB2ENR
+# define BOARD_USART_PIN_CLOCK_BIT	RCC_APB2ENR_IOPAEN
+
+//# define BOARD_FORCE_BL_PIN		GPIO5
+//# define BOARD_FORCE_BL_PORT		GPIOB
+# define BOARD_FORCE_BL_CLOCK_REGISTER	RCC_APB2ENR
+# define BOARD_FORCE_BL_CLOCK_BIT	RCC_APB2ENR_IOPBEN
+# define BOARD_FORCE_BL_VALUE		BOARD_FORCE_BL_PIN
+
+# define BOARD_FLASH_SECTORS		60
+# define FLASH_SECTOR_SIZE		0x400
+
+#endif
+
+
+#ifndef OSC_FREQ
 # error Unrecognised BOARD definition
 #endif
 
@@ -230,6 +266,8 @@ main(void)
 		timeout = 0xffffffff;
 #endif
 
+    timeout = 300; // TODO REMOVE THIS LINE 
+
 	/* look for the magic wait-in-bootloader value in backup register zero */
 
 
@@ -239,7 +277,7 @@ main(void)
 		jump_to_app();
 
 		/* if we returned, there is no app; go to the bootloader and stay there */
-		timeout = 0;
+		timeout = 300;
 	}
 
 	/* configure the clock for bootloader activity */
@@ -257,6 +295,6 @@ main(void)
 		jump_to_app();
 
 		/* boot failed; stay in the bootloader forever next time */
-		timeout = 0;
+		timeout = 300;
 	}
 }

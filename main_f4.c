@@ -152,6 +152,30 @@ static struct {
 #endif
 
 
+#ifdef BOARD_MAVSTATION
+# define BOARD_TYPE			21        // 21 or 0x15 , same, same. , leaves room for more px4 or 3dr boards.
+# define BOARD_FLASH_SECTORS		11
+# define BOARD_FLASH_SIZE		(1024 * 1024)
+
+# define OSC_FREQ			24 // not 16 like the quanton
+
+# define BOARD_PIN_LED_ACTIVITY		GPIO14		// no activity LED = 0
+# define BOARD_PIN_LED_BOOTLOADER	GPIO13
+# define BOARD_PORT_LEDS		GPIOC // BUZZ: LEDS are on PC13 and PC14(blue)
+# define BOARD_CLOCK_LEDS		RCC_AHB1ENR_IOPCEN // 'CEN' means PORT 'C' 'EN' able
+# define BOARD_LED_OFF			gpio_clear
+# define BOARD_LED_ON			gpio_set
+
+//# define BOARD_FORCE_BL_PIN		GPIO11
+# define BOARD_FORCE_BL_PORT		GPIOA
+# define BOARD_FORCE_BL_CLOCK_REGISTER	RCC_AHB1ENR
+# define BOARD_FORCE_BL_CLOCK_BIT	RCC_AHB1ENR_IOPAEN
+# define BOARD_FORCE_BL_PULL		GPIO_PUPD_PULLUP
+# define BOARD_FORCE_BL_STATE		0
+#endif
+
+
+
 #define APP_SIZE_MAX			(BOARD_FLASH_SIZE - BOOTLOADER_RESERVATION_SIZE)
 
 /* context passed to cinit */

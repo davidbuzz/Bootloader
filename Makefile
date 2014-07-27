@@ -35,7 +35,7 @@ export COMMON_SRCS	 = bl.c
 #
 # Bootloaders to build
 #
-TARGETS			 = quanton_bl px4fmu_bl px4fmuv2_bl px4flow_bl stm32f4discovery_bl px4io_bl
+TARGETS			 = quanton_bl px4fmu_bl px4fmuv2_bl px4flow_bl stm32f4discovery_bl px4io_bl mavstation_bl
 
 # px4io_bl px4flow_bl
 
@@ -66,13 +66,17 @@ quanton:	quanton_bl
 quanton_bl: $(MAKEFILE_LIST)
 	make -f Makefile.f4 TARGET=quanton INTERFACE=USB BOARD=QUANTON USBDEVICESTRING="\\\"QUA BL FMU v1.x\\\"" USBPRODUCTID="0x0012"
 
+mavstation:	mavstation_bl
+mavstation_bl: $(MAKEFILE_LIST)
+	make -f Makefile.f1 TARGET=mavstation INTERFACE=USART BOARD=MAVSTATION PX4_BOOTLOADER_DELAY=2000 USBDEVICESTRING="\\\"MAV BL MU v1.x\\\"" USBPRODUCTID="0x0013"
+
 stm32f4discovery: 	stm32f4discovery_bl
 stm32f4discovery_bl: $(MAKEFILE_LIST)
 	make -f Makefile.f4 TARGET=discovery INTERFACE=USB BOARD=DISCOVERY USBDEVICESTRING="\\\"PX4 BL DISCOVERY\\\"" USBPRODUCTID="0x0001"
 
 px4flow:	px4flow_bl
 px4flow_bl: $(MAKEFILE_LIST)
-	make -f Makefile.f4 TARGET=flow INTERFACE=USB BOARD=FLOW USBDEVICESTRING="\\\"PX4 FLOW v1.3\\\"" USBPRODUCTID="0x0015"
+	make -f Makefile.f4 TARGET=px4flow INTERFACE=USB BOARD=FLOW USBDEVICESTRING="\\\"PX4 FLOW v1.3\\\"" USBPRODUCTID="0x0015"
 
 # Default bootloader delay is *very* short, just long enough to catch
 # the board for recovery but not so long as to make restarting after a 
@@ -80,4 +84,4 @@ px4flow_bl: $(MAKEFILE_LIST)
 #
 px4io: 		px4io_bl
 px4io_bl: $(MAKEFILE_LIST)
-	make -f Makefile.f1 TARGET=io INTERFACE=USART BOARD=IO PX4_BOOTLOADER_DELAY=200
+	make -f Makefile.f1 TARGET=px4io INTERFACE=USART BOARD=IO PX4_BOOTLOADER_DELAY=200
